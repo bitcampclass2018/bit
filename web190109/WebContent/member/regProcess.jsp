@@ -5,7 +5,7 @@
 %>    
     
 <!-- 빈즈객체 생성 -->   
-<jsp:useBean id="memberInfo" class="member.MemberInfo" />  
+<jsp:useBean id="memberInfo" class="member.dao.MemberInfo" />  
 
 <!-- 사용자 입력데이터 받기 -->
 <!-- 빈즈클래스의 변수 이름과 폼 name 속성의 값이 같아야 한다! -->
