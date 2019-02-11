@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%> 
+<% String id = (String)session.getAttribute("loginInfo"); %>   
     
 <!DOCTYPE html>
 <html>
@@ -14,6 +15,11 @@
         nav a{
             text-decoration: none;
             color:black;
+        }
+        article * {
+        padding: 10px;
+        text-align: center;
+        margin: 0 auto;
         }
         article>ul{
             margin-left: 250px;
@@ -56,8 +62,8 @@
 	<form method="post">
 	<table>
 		<tr>
-			<td>사용자닉네임</td>
-			<td><input type="text" name="member_id"></td>
+			<td>사용자 아이디  </td>
+			<td><%=id %></td>
 		</tr>
 		<tr>
 			<td>비밀번호</td>

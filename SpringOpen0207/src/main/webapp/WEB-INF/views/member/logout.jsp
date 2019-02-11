@@ -14,6 +14,9 @@
             text-decoration: none;
             color:black;
         }
+        article * {
+        text-align: center;
+        }
         article>ul{
             margin-left: 250px;
             width: 300px;

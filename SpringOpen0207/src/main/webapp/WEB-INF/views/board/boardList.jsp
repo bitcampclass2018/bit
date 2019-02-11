@@ -15,6 +15,11 @@
             text-decoration: none;
             color:black;
         }
+        article * {
+        padding: 10px;
+        text-align: center;
+        margin: 0 auto;
+        }
         article>ul{
             margin-left: 250px;
             width: 300px;

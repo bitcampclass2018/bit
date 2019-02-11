@@ -3,6 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
@@ -20,7 +21,20 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="2" />
 	</beans:bean>
+	
+	<!-- 커스텀뷰 처리를 위한 Resolver 등록 -->
+	<beans:bean id="viewResolver"
+				class="org.springframework.web.servlet.view.BeanNameViewResolver" 
+				p:order="1"
+				/>
+	
+	<!-- 다운로드 커스텀 뷰 등록 -->
+	<beans:bean id="download" class="com.bitcamp.open0207.view.DownloadView" />
+	<!-- controller에서 커스텀뷰 이름과 동일하게 -->
+	
+	
 	
 	<!-- 파일업로드 처리를 위한 multipartResolver bean 등록 -->
 	<beans:bean id="multipartResolver"
