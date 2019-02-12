@@ -1,6 +1,9 @@
 package com.bitcamp.open0207.controller;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 
 import javax.imageio.spi.RegisterableService;
 import javax.inject.Inject;
@@ -16,7 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bitcamp.open0207.model.Member;
+import com.bitcamp.open0207.service.MailSendService;
 import com.bitcamp.open0207.service.MemberRegService;
+import com.bitcamp.open0207.service.SecurityService;
 
 @Controller
 @RequestMapping("/member/memberReg")
@@ -24,6 +29,12 @@ public class MemberRegController {
 	
 	@Inject
 	private MemberRegService regService;
+	
+	@Inject
+	private MailSendService mailService;
+	
+	@Inject
+	private SecurityService securityService;
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getForm() {
@@ -37,10 +48,12 @@ public class MemberRegController {
 			@RequestParam("upw") String pw,
 			@RequestParam("uname") String name,
 			@RequestParam("uphoto") MultipartFile file
-			) {
+			) throws NoSuchAlgorithmException, UnsupportedEncodingException, GeneralSecurityException {
 	
 		
 		System.out.println("전달받은 값"+email +" : "+pw +" : "+name+" : "+file.getOriginalFilename());
+		
+		String ckcode = securityService.makeCode(id);
 		
 		Member member = new Member();
 		member.setId(id);
@@ -48,6 +61,9 @@ public class MemberRegController {
 		member.setEmail(email);
 		
 		member.setName(name);
+		member.setSit(0); //처음 가입시 상태 0
+		member.setCkcode(ckcode); //보안처리한 아이디 넘겨주기.
+		System.out.println("암호처리"+ckcode);
 		
 		String uri = "/upload";
 		String dir = request.getSession().getServletContext().getRealPath(uri);
@@ -65,9 +81,8 @@ public class MemberRegController {
 			member.setPhoto("photo");
 		}
 
-		//member.setPhoto(fileName);
 		regService.memberReg(member);
-		
+		mailService.mailSender(email, ckcode);
 		
 		return "member/insert";
 	}

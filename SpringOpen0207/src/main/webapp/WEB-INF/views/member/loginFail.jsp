@@ -14,10 +14,8 @@
             text-decoration: none;
             color:black;
         }
-       article * {
-        padding: 10px;
+        article * {
         text-align: center;
-        margin: 0 auto;
         }
         article>ul{
             margin-left: 250px;
@@ -37,7 +35,7 @@
 </style>
 </head>
 <body>
-<header>
+	<header>
         <h1>Open Project</h1>
         <hr>
     </header>
@@ -55,12 +53,11 @@
         <hr>
     </nav>
     <article>
-        <h2>회원가입</h2>
+        <h2>메일인증을 해주세요.</h2>
         <hr>
-        <h4>메일 인증을 완료해야 서비스를 사용가능합니다.</h4>
-        <a href="../member/login">로그인 하러가기</a>
+        <h4>메일인증후에 서비스를 이용할 수 있습니다.</h4>
         <a href="../">메인</a>
     </article>
-	
+
 </body>
 </html>

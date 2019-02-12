@@ -29,7 +29,6 @@ public class BoardController {
 	}
 	@RequestMapping(value="/board/insert", method=RequestMethod.POST) 
 	public String insertBoard(HttpServletRequest request,
-			//@RequestParam("member_id") String member_id,
 			@RequestParam("upw") String pw,
 			@RequestParam("umessage") String message,
 			HttpSession session

@@ -14,10 +14,8 @@
             text-decoration: none;
             color:black;
         }
-       article * {
-        padding: 10px;
+        article * {
         text-align: center;
-        margin: 0 auto;
         }
         article>ul{
             margin-left: 250px;
@@ -37,28 +35,27 @@
 </style>
 </head>
 <body>
-<header>
+	<header>
         <h1>Open Project</h1>
         <hr>
     </header>
     <nav>
         <ul>
-            <li><a href="../member/memberReg">회원가입</a></li>
-            <li><a href="../member/login">로그인</a></li>
-            <li><a href="../member/view">회원마이페이지(회원)</a></li>
-            <li><a href="../member/list">회원리스트(회원)</a></li>
-            <li><a href="../board/insert">글작성하기</a></li>
-			<li><a href="../board/list">게시판</a></li>
-            <li><a href="../emp/list">사원리스트</a></li>
-            <li><a href="../emp/insert">사원등록</a></li>
+            <li><a href="../../member/memberReg">회원가입</a></li>
+            <li><a href="../../member/login">로그인</a></li>
+            <li><a href="../../member/view">회원마이페이지(회원)</a></li>
+            <li><a href="../../member/list">회원리스트(회원)</a></li>
+            <li><a href="../../board/insert">글작성하기</a></li>
+			<li><a href="../../board/list">게시판</a></li>
+            <li><a href="../../emp/list">사원리스트</a></li>
+            <li><a href="../../emp/insert">사원등록</a></li>
         </ul>
         <hr>
     </nav>
     <article>
-        <h2>회원가입</h2>
+        <h2>메일인증 성공</h2>
         <hr>
-        <h4>메일 인증을 완료해야 서비스를 사용가능합니다.</h4>
-        <a href="../member/login">로그인 하러가기</a>
+        <h4>메일인증에 성공하였습니다.</h4>
         <a href="../">메인</a>
     </article>
 	

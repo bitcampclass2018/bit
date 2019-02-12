@@ -27,4 +27,10 @@ public class MemberOpenDao {
 	public List<Member> selectList() {
 		return sqlSession.selectList(namespace+".selectList");
 	}
+	public Member mailCheck(String email) {
+		return sqlSession.selectOne(namespace+".selectByEmail",email);
+	}
+	public int mailCheckUp(String email) {
+		return sqlSession.update(namespace+".updateSit",email);
+	}
 }

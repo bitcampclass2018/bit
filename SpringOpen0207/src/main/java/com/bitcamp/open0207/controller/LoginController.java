@@ -39,11 +39,15 @@ public class LoginController {
 	HttpSession session) {
 		Member member = logService.selectById(id);
 		String findPw = member.getPassword();
+		int findSit = member.getSit();
 		model.addAttribute("result", member);
 		
 		String url = request.getParameter("url");
 		System.out.println("넘어온 url"+url);
 		
+		if(findSit==0) {
+			return "member/loginFail";
+		}
 		if(findPw!=null&&findPw.equals(password)) {
 			session.setAttribute("loginInfo", id);
 			System.out.println("session생성 : "+id);

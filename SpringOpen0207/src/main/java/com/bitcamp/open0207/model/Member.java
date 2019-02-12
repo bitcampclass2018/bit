@@ -7,7 +7,8 @@ public class Member {
 	private String password;
 	private String name;
 	private String photo;
-	
+	private String ckcode;
+	private int sit;
 	
 	public int getIdx() {
 		return idx;
@@ -45,10 +46,25 @@ public class Member {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
+	
+	
+	public String getCkcode() {
+		return ckcode;
+	}
+	public void setCkcode(String ckcode) {
+		this.ckcode = ckcode;
+	}
+	public int getSit() {
+		return sit;
+	}
+	public void setSit(int sit) {
+		this.sit = sit;
+	}
 	@Override
 	public String toString() {
 		return "Member [idx=" + idx + ", id=" + id + ", email=" + email + ", password=" + password + ", name=" + name
-				+ ", photo=" + photo + "]";
+				+ ", photo=" + photo + ", ckcode=" + ckcode + ", sit=" + sit + "]";
 	}
+	
 
 }

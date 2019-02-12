@@ -16,4 +16,10 @@ public class MemberRegService {
 	public int memberReg(Member member) {
 		return dao.insertMember(member);
 	}
+	public Member mailCheck(String email) {
+		return dao.mailCheck(email);
+	}
+	public int mailCheckUp(String email) {
+		return dao.mailCheckUp(email);
+	}
 }

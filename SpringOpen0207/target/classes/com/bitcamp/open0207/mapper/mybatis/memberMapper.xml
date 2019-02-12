@@ -7,8 +7,8 @@
 	<insert id="insertMember"
 		parameterType="com.bitcamp.open0207.model.Member"
 	>
-		insert into member2(id,password,name,email,photo)
-		 value ( #{id}, #{password}, #{name}, #{email}, #{photo} )
+		insert into member2(id,password,name,email,photo,ckcode,sit)
+		 value ( #{id}, #{password}, #{name}, #{email}, #{photo}, #{ckcode},#{sit} )
 	</insert>
 	
 	<select id="selectById"
@@ -16,11 +16,24 @@
 	>
 		select * from member2 where id=#{param}
 	</select>
+	
+	<select id="selectByEmail"
+		resultType="com.bitcamp.open0207.model.Member"
+	>
+		select * from member2 where email=#{param}
+	</select>
+	
 	<select id="selectList"
 		resultType="com.bitcamp.open0207.model.Member"
 	>
 		select * from member2 order by idx
 	</select>
+	
+	<update id="updateSit"
+		parameterType="com.bitcamp.open0207.model.Member"
+	>
+		update member2 set sit=1 where email=#{param}
+	</update>
 	
 	<!-- 게시판 sql -->
 	<insert id ="insertBoard"
@@ -47,4 +60,6 @@
 	>
 		select * from emp order by idx
 	</select>
+	
+	
 </mapper>
