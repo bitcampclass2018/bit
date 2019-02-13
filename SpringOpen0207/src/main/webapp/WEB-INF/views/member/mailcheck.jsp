@@ -41,14 +41,14 @@
     </header>
     <nav>
         <ul>
-            <li><a href="../../member/memberReg">회원가입</a></li>
-            <li><a href="../../member/login">로그인</a></li>
-            <li><a href="../../member/view">회원마이페이지(회원)</a></li>
-            <li><a href="../../member/list">회원리스트(회원)</a></li>
-            <li><a href="../../board/insert">글작성하기</a></li>
-			<li><a href="../../board/list">게시판</a></li>
-            <li><a href="../../emp/list">사원리스트</a></li>
-            <li><a href="../../emp/insert">사원등록</a></li>
+            <li><a href="../../../member/memberReg">회원가입</a></li>
+            <li><a href="../../../member/login">로그인</a></li>
+            <li><a href="../../../member/view">회원마이페이지(회원)</a></li>
+            <li><a href="../../../member/list">회원리스트(회원)</a></li>
+            <li><a href="../../../board/insert">글작성하기</a></li>
+			<li><a href="../../../board/list">게시판</a></li>
+            <li><a href="../../../emp/list">사원리스트</a></li>
+            <li><a href="../../../emp/insert">사원등록</a></li>
         </ul>
         <hr>
     </nav>

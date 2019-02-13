@@ -53,11 +53,17 @@ public class MemberRegController {
 		
 		System.out.println("전달받은 값"+email +" : "+pw +" : "+name+" : "+file.getOriginalFilename());
 		
-		String ckcode = securityService.makeCode(id);
+		String code = "abcdefghijklmnopqrstuvwxyz0123456789";
+		String ckcode="";
+		for(int i=0;i<5;i++) {
+			int k =(int)(Math.random()*code.length());
+			ckcode += code.charAt(k);
+		}
 		
+		String sPw = securityService.makeCode(pw);
 		Member member = new Member();
 		member.setId(id);
-		member.setPassword(pw);
+		member.setPassword(sPw);
 		member.setEmail(email);
 		
 		member.setName(name);

@@ -19,8 +19,8 @@ public class MailCkController {
 	
 	@RequestMapping("/Auth/code/{email}/{ckcode}")
 	public String mailCk(HttpServletRequest request,
-			@PathVariable String email,
-			@PathVariable String ckcode) {
+			@PathVariable("email") String email,
+			@PathVariable("ckcode") String ckcode) {
 		
 		System.out.println("MailCkController : "+email+";"+ckcode);
 		

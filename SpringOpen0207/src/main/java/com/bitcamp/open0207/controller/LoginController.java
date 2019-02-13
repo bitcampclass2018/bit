@@ -1,6 +1,9 @@
 package com.bitcamp.open0207.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bitcamp.open0207.model.Member;
 import com.bitcamp.open0207.service.LoginService;
+import com.bitcamp.open0207.service.SecurityService;
 
 @Controller
 @RequestMapping("/member/login")
@@ -24,6 +28,9 @@ public class LoginController {
 	
 	@Inject
 	private LoginService logService;
+	
+	@Inject
+	private SecurityService securityService;
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String getForm() {
@@ -36,9 +43,12 @@ public class LoginController {
 	@RequestParam("uid") String id,
 	@RequestParam("upw") String password,
 	Model model,
-	HttpSession session) {
+	HttpSession session) throws NoSuchAlgorithmException, UnsupportedEncodingException, GeneralSecurityException {
 		Member member = logService.selectById(id);
-		String findPw = member.getPassword();
+		String sPw = member.getPassword(); //db엔 암호화된 pw
+		String findPw = securityService.makeDecode(sPw);
+		System.out.println("sPw: "+sPw);
+		System.out.println("findPw: "+findPw);
 		int findSit = member.getSit();
 		model.addAttribute("result", member);
 		
