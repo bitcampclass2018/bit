@@ -12,7 +12,7 @@ public class ShowOnesentence {
 	private int isbn; //출력은 안함
 	private String bookTitle;
 	private String author;
-	private String publisher;
+	private String publisher; 
 	
 	public ShowOnesentence() {}
 	

@@ -22,7 +22,7 @@ public class OnesentenceService implements IOnesentenceService {
 	public void makeOneSentence(Onesentence onesentence) {
 		dao.insertOneSentence(onesentence);
 	}
-
+ 
 	@Override
 	public List<ShowOnesentence> showOneSentenceList() {
 		return dao.selectOnesentenceList();

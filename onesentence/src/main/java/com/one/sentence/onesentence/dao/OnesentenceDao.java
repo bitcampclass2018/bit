@@ -14,7 +14,7 @@ import com.one.sentence.model.Onesentence;
 import com.one.sentence.onesentence.model.Book;
 import com.one.sentence.onesentence.model.ShowOnesentence;
 
-
+ 
 @Repository
 public class OnesentenceDao implements IOnesentenceDao{
 

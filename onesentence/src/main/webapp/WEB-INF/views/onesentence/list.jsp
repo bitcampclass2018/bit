@@ -11,7 +11,7 @@
 <body>
 	<table border="1">
 			<tr>
-				<td>작성자번호</td>
+				<td>작성자번호</td> 
 				<td>작성자이름</td>
 				<td>한문장번호</td>
 				<td>한문장</td>

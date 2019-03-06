@@ -5,7 +5,7 @@ public class Book {
 	private String bookTitle;
 	private String bookGenre;
 	private String author;
-	private String publisher;
+	private String publisher; 
 	public int getIsbn() {
 		return isbn;
 	}

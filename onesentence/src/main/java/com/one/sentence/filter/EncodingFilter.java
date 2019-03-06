@@ -17,7 +17,7 @@ public class EncodingFilter implements Filter{
 
 	    public void init(FilterConfig filterConfig) throws ServletException{
 	        this.filterConfig = filterConfig;
-	    }
+	    } 
 
 	    public void doFilter(ServletRequest request, ServletResponse response,
 	            FilterChain chain) throws IOException, ServletException {

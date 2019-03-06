@@ -9,6 +9,7 @@
 		insert into one_sentence (oneSentence,page,userIdx,isbn)
 		 value (#{oneSentence},#{page},#{userIdx},#{isbn})
 	</insert>
+
 	
 	<select id="selectOnesentenceList"
 		resultType="com.one.sentence.onesentence.model.ShowOnesentence"

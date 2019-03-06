@@ -13,6 +13,7 @@ public class Hashtag {
 	public String getHashtag() {
 		return hashtag;
 	}
+	
 	public void setHashtag(String hashtag) {
 		this.hashtag = hashtag;
 	}

@@ -13,6 +13,7 @@ public class Onesentence {
 	
 	public Onesentence() {}
 	
+	
 	public Onesentence(int oneSentenceIdx, String oneSentence, String page, Date oneSentenceRegisteredTime, int userIdx,
 			int isbn) {
 		this.oneSentenceIdx = oneSentenceIdx;

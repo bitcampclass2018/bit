@@ -27,6 +27,7 @@ public class oneSentenceController {
 	@RequestMapping(value="/onesentence/insert", method=RequestMethod.GET)
 	public String getForm() {
 		return "onesentence/insert";
+		
 	}
 	
 	@RequestMapping(value="/onesentence/insert", method=RequestMethod.POST)
