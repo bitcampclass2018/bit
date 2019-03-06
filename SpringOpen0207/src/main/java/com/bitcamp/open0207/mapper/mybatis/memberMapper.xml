@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitcamp.open0207.mapper.mybatis.memberMapper">
+<!-- <mapper namespace="com.bitcamp.open0207.dao.MemberDao"> -->
+
+	<!-- 로우삽입를 위한 sql등록 엘리먼트 -->
+	<insert id="insertMember"
+		parameterType="com.bitcamp.open0207.model.Member"
+	>
+		insert into member2(id,password,name,email,photo,ckcode,sit)
+		 value ( #{id}, #{password}, #{name}, #{email}, #{photo}, #{ckcode},#{sit} )
+	</insert>
+	
+	<select id="selectById"
+		resultType="com.bitcamp.open0207.model.Member"
+	>
+		select * from member2 where id=#{param}
+	</select>
+	
+	<select id="selectByEmail"
+		resultType="com.bitcamp.open0207.model.Member"
+	>
+		select * from member2 where email=#{param}
+	</select>
+	
+	<select id="selectList"
+		resultType="com.bitcamp.open0207.model.Member"
+	>
+		select * from member2 order by idx
+	</select>
+	
+	<update id="updateSit"
+		parameterType="com.bitcamp.open0207.model.Member"
+	>
+		update member2 set sit=1 where email=#{param}
+	</update>
+	
+	<!-- 게시판 sql -->
+	<insert id ="insertBoard"
+		parameterType="com.bitcamp.open0207.model.Board"
+		>
+			insert into board(member_id,password,message) 
+			value ( #{member_id}, #{password}, #{message} )
+	</insert>
+	<select id="selectBoardList"
+		resultType="com.bitcamp.open0207.model.Board"
+	>
+		select * from board order by idx
+	</select>
+	
+	<!-- 사원 sql -->
+	<insert id ="insertEmp"
+		parameterType="com.bitcamp.open0207.model.Emp"
+		>
+			insert into emp(empno, empname, deptno) 
+			value ( #{empno}, #{empname}, #{deptno} )
+	</insert>
+	<select id="selectEmpList"
+		resultType="com.bitcamp.open0207.model.Emp"
+	>
+		select * from emp order by idx
+	</select>
+	
+	
+</mapper>
