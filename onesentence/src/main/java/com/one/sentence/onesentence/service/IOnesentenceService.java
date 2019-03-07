@@ -13,7 +13,9 @@ public interface IOnesentenceService {
 	public List<ShowOnesentence> showOneSentenceList();
 	public List<ShowOnesentence> showOneSentenceListByuserIdx(int userIdx);
 	public List<ShowOnesentence> showOneSentenceListForLiketo(int userIdx); 
-	public Onesentence showOneSentenceByoneSentenceIdx(int oneSentenceIdx);
+	public ShowOnesentence showOneSentenceByoneSentenceIdx(int oneSentenceIdx);
+	public Onesentence showOneSentenceModel(int oneSentenceIdx);
+	
 	public void changeOneSentence(int oneSentenceIdx, String oneSentence, String page, int isbn);
 	public int removeOneSentence(int oneSentenceIdx);
 	

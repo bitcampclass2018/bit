@@ -60,8 +60,12 @@ public class OnesentenceDao implements IOnesentenceDao{
 	}
 
 	@Override
-	public Onesentence selectOnesentenceByoneSentenceIdx(int oneSentenceIdx) {
+	public ShowOnesentence selectOnesentenceByoneSentenceIdx(int oneSentenceIdx) {
 		return sqlSession.selectOne(namespace+".selectOnesentenceByoneSentenceIdx", oneSentenceIdx);
+	}
+	@Override
+	public Onesentence selectOnesentenceModel(int oneSentenceIdx) {
+		return sqlSession.selectOne(namespace+".selectOnesentenceModel", oneSentenceIdx);
 	}
 
 	@Override
@@ -96,5 +100,6 @@ public class OnesentenceDao implements IOnesentenceDao{
 		map.put("oneSentence", oneSentence);
 		return sqlSession.selectOne(namespace+".findOneSentenceIdx", map);
 	}
+
 
 }

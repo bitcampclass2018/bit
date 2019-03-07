@@ -15,7 +15,10 @@ public interface IOnesentenceDao {
 	public List<ShowOnesentence> selectOnesentenceListByuserIdx(int userIdx);
 	public List<ShowOnesentence> selectOnesentenceListForLiketo(int userIdx);
 	
-	public Onesentence selectOnesentenceByoneSentenceIdx(int oneSentenceIdx);
+	public ShowOnesentence selectOnesentenceByoneSentenceIdx(int oneSentenceIdx);
+	public Onesentence selectOnesentenceModel(int oneSentenceIdx);
+	
+	
 	public int updateOneSentence(int oneSentenceIdx,String oneSentence, String page, int isbn);
 	public int deleteOnesentence(int oneSentenceIdx);
 	

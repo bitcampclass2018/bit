@@ -44,8 +44,12 @@ public class OnesentenceService implements IOnesentenceService {
 	}
 	
 	@Override
-	public Onesentence showOneSentenceByoneSentenceIdx(int oneSentenceIdx) {
+	public ShowOnesentence showOneSentenceByoneSentenceIdx(int oneSentenceIdx) {
 		return dao.selectOnesentenceByoneSentenceIdx(oneSentenceIdx);
+	}
+	@Override
+	public Onesentence showOneSentenceModel(int oneSentenceIdx) {
+		return dao.selectOnesentenceModel(oneSentenceIdx);
 	}
 
 	@Override
@@ -95,5 +99,6 @@ public class OnesentenceService implements IOnesentenceService {
 	public int findOneSentenceIdx(int userIdx, int isbn, String oneSentence) {
 		return dao.findOneSentenceIdx(userIdx, isbn, oneSentence);
 	}
+
 
 }

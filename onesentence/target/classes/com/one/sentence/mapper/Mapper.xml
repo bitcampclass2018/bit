@@ -20,6 +20,12 @@
  			group by o.oneSentenceIdx order by o.oneSentenceRegisteredTime
 	</select>
 	
+	<select id="selectOnesentenceModel"
+		resultType="com.one.sentence.model.Onesentence"
+	>
+		  select * from one_sentence where oneSentenceIdx=#{oneSentenceIdx}
+	</select>
+	
 	<select id="selectOnesentenceListByuserIdx"
 		resultType="com.one.sentence.onesentence.model.ShowOnesentence"
 	>
@@ -30,9 +36,11 @@
 	</select>
 	
 	<select id="selectOnesentenceByoneSentenceIdx"
-		resultType="com.one.sentence.model.Onesentence"
+		resultType="com.one.sentence.onesentence.model.ShowOnesentence"
 	>
-		select * from one_sentence where oneSentenceIdx=${value} 
+		select o.userIdx,u.userName, o.oneSentenceIdx,o.oneSentence,o.page,o.oneSentenceRegisteredTime,
+		 o.isbn, b.bookTitle, b.author, b.publisher from one_sentence o, book b, user_info u
+		  where o.oneSentenceIdx=#{oneSentenceIdx} and o.isbn=b.isbn and o.userIdx=u.userIdx; 
 	</select>	
 	
 	<select id="selectOnesentenceForliketo"
@@ -40,7 +48,7 @@
 	>
 	select o.userIdx,u.userName, o.oneSentenceIdx,o.oneSentence,o.page,o.oneSentenceRegisteredTime,
 	 o.isbn, b.bookTitle, b.author, b.publisher from one_sentence o, book b, user_info u, liketo l
-	  where o.oneSentenceIdx=(select oneSentenceIdx from liketo where liketo.userIdx=${value}) and b.isbn=o.isbn and u.userIdx=o.userIdx
+	  where o.oneSentenceIdx in(select oneSentenceIdx from liketo where liketo.userIdx=${value}) and b.isbn=o.isbn and u.userIdx=o.userIdx
 	   group by o.oneSentenceIdx order by l.likeRegisteredTime	
 	</select>	
 	

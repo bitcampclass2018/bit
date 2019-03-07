@@ -16,7 +16,12 @@
 <li><a href="onesentence/list/1">회원번호1목록</a></li>
 <li><a href="onesentence/liketo/1">회원번호1이 좋아한 문장목록</a></li>
 <li><a href="profile/1">회원번호1의 프로필</a></li>
+
+
+
 </ul>
+<h1>facebook</h1>
+<a href="facebook">문장공유</a>
 
 </body>
 </html>
