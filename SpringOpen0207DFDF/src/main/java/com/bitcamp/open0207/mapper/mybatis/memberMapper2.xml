@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bitcamp.open0207.mapper.mybatis.memberMapper2">
+<!-- <mapper namespace="com.bitcamp.open0207.dao.MemberDao"> -->
+
+	<!-- 로우삽입를 위한 sql등록 엘리먼트 -->
+	<insert id="insertMember"
+		parameterType="com.bitcamp.open0207.model.Member2"
+	>
+		insert into member3(id,password,name,email)
+		 value ( #{id}, #{password}, #{name}, #{email} )
+	</insert>
+	<select id="selectList"
+		resultType="com.bitcamp.open0207.model.Member2"
+	>
+		select * from member3 order by idx
+	</select>
+	
+	<select id="selectById"
+		resultType="com.bitcamp.open0207.model.Member2"
+	>
+		select * from member3 where id=#{param}
+	</select>
+	
+	<select id="selectByEmail"
+		resultType="com.bitcamp.open0207.model.Member2"
+	>
+		select * from member3 where email=#{param}
+	</select>
+	<delete id="delete"
+		parameterType="com.bitcamp.open0207.model.Member2"
+	>
+		delete from member3 where id=#{param}
+	</delete>
+	<update id="updatePwd"
+		parameterType="com.bitcamp.open0207.model.Member2"
+	>
+		update member3 set password=#{password} where id=#{id}
+	</update>
+	
+</mapper>
