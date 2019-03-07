@@ -7,6 +7,7 @@ import com.one.sentence.model.Onesentence;
 import com.one.sentence.onesentence.model.Book;
 import com.one.sentence.onesentence.model.ShowOnesentence;
 
+
 public interface IOnesentenceService {
 	public void makeOneSentence(Onesentence onesentence);
 	public List<ShowOnesentence> showOneSentenceList();
@@ -24,5 +25,4 @@ public interface IOnesentenceService {
 	
 	public void makeHashtag(Hashtag tag);
 	public int findOneSentenceIdx(int userIdx, int isbn, String oneSentence);
-	
 }

@@ -18,7 +18,6 @@
 		   o.isbn, b.bookTitle, b.author, b.publisher from one_sentence o, book b, user_info u
 		    where b.isbn=o.isbn and u.userIdx=o.userIdx
  			group by o.oneSentenceIdx order by o.oneSentenceRegisteredTime
- 
 	</select>
 	
 	<select id="selectOnesentenceListByuserIdx"
@@ -27,8 +26,7 @@
 		select o.userIdx,u.userName, o.oneSentenceIdx,o.oneSentence,o.page,o.oneSentenceRegisteredTime,
 		 o.isbn, b.bookTitle, b.author, b.publisher from one_sentence o, book b, user_info u
 		  where b.isbn=o.isbn and u.userIdx=o.userIdx and u.userIdx=${value}
-		 group by o.oneSentenceIdx order by o.oneSentenceRegisteredTime
- 
+		 group by o.oneSentenceIdx order by o.oneSentenceRegisteredTime 
 	</select>
 	
 	<select id="selectOnesentenceByoneSentenceIdx"
@@ -37,20 +35,13 @@
 		select * from one_sentence where oneSentenceIdx=${value} 
 	</select>	
 	
-	
-	
-	
-	
 	<select id="selectOnesentenceForliketo"
 		resultType="com.one.sentence.onesentence.model.ShowOnesentence"
 	>
-
 	select o.userIdx,u.userName, o.oneSentenceIdx,o.oneSentence,o.page,o.oneSentenceRegisteredTime,
 	 o.isbn, b.bookTitle, b.author, b.publisher from one_sentence o, book b, user_info u, liketo l
 	  where o.oneSentenceIdx=(select oneSentenceIdx from liketo where liketo.userIdx=${value}) and b.isbn=o.isbn and u.userIdx=o.userIdx
-	   group by o.oneSentenceIdx order by l.likeRegisteredTime
- 
-	
+	   group by o.oneSentenceIdx order by l.likeRegisteredTime	
 	</select>	
 	
 	
@@ -123,7 +114,7 @@
 		parameterType="com.one.sentence.model.Hashtag"
 	>
 		insert into hashtag (hashtag, oneSentenceIdx) value(#{hashtag}, #{oneSentenceIdx})
-		</insert>
+	</insert>
 	
 	
 </mapper>

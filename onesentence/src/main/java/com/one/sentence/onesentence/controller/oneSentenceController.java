@@ -27,7 +27,6 @@ public class oneSentenceController {
 	@RequestMapping(value="/onesentence/insert", method=RequestMethod.GET)
 	public String getForm() {
 		return "onesentence/insert";
-		
 	}
 	
 	@RequestMapping(value="/onesentence/insert", method=RequestMethod.POST)
@@ -46,10 +45,10 @@ public class oneSentenceController {
 			
 			Book book = new Book();
 			//String author = request.getParameter("author");
-			String author = "沅뚯옱吏�";
-			String bookGenre = "怨듯룷�냼�꽕";
-			String bookTitle = "�븳吏�誘�";
-			String publisher = "鍮꾪듃異쒗뙋�궗";
+			String author = "권재진";
+			String bookGenre = "공포소설";
+			String bookTitle = "한지민";
+			String publisher = "비트출판사";
 			
 			book.setIsbn(isbn);
 			book.setAuthor(author);
@@ -65,14 +64,12 @@ public class oneSentenceController {
 		onesentence.setPage(page);
 		onesentence.setUserIdx(userIdx);
 		
-		oneService.upUserPoint(userIdx); //�쑀���룷�씤�듃 �삱�젮以��떎.
+		oneService.upUserPoint(userIdx); //유저포인트 올려준다.
 		
 		oneService.makeOneSentence(onesentence);
 		
-		
-		//0출력; 한문장 idx값을 어떻게 받
+		//해시태그 부여를 위해 유저입력값을 이용하여 해당 한문장의 index를 가져온다.
 		int oneSentenceIdx = oneService.findOneSentenceIdx(userIdx, isbn, oneSentence);
-		System.out.println("---"+oneSentenceIdx);
 		
 		Hashtag tag = new Hashtag();
 		tag.setHashtag(hashtag);
@@ -111,16 +108,6 @@ public class oneSentenceController {
 		return "onesentence/list";
 		
 	}
-	@RequestMapping("/onesentence/liketo/{idx}")
-	public String selectOnesententceListForLiketo(
-			@PathVariable("idx") int idx,
-			Model model) {		
-		List<ShowOnesentence> oneSentenceList = oneService.showOneSentenceListForLiketo(idx);
-		
-		model.addAttribute("oneSentenceList", oneSentenceList);
-		return "onesentence/list";
-		
-	}
 	@RequestMapping("/onesentence/delete/{idx}")
 	public String deleteOnesentenceByOnesentenceIdx(
 			@PathVariable("idx") int idx,
@@ -132,15 +119,13 @@ public class oneSentenceController {
 		
 		oneService.removeOneSentence(idx);
 		
-		
-		
 		List<ShowOnesentence> oneSentenceList = oneService.showOneSentenceList();
 		model.addAttribute("oneSentenceList", oneSentenceList);
 		return "onesentence/list";
 	}
 	@RequestMapping("/onesentence/update")
 	public String updateOnesentenceByOnesentenceIdx(Model model, HttpServletRequest request) {	
-		String oneSentence = (String)request.getParameter("oneSentence");
+String oneSentence = (String)request.getParameter("oneSentence");
 		
 		String one = (String)request.getParameter("oneSentenceIdx");
 		int oneSentenceIdx = Integer.parseInt(one);
