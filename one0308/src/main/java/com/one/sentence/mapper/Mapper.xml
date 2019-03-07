@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.one.sentence.mapper.Mapper">
+	
+	<!-- 한문장 -->
+	<insert id="insertOnesentence"
+		parameterType="com.one.sentence.model.Onesentence"
+	>
+		insert into one_sentence (oneSentence,page,userIdx,isbn)
+		 value (#{oneSentence},#{page},#{userIdx},#{isbn})
+	</insert>
+
+	
+	<select id="selectOnesentenceList"
+		resultType="com.one.sentence.onesentence.model.ShowOnesentence"
+	>
+		  select o.userIdx,u.userName, o.oneSentenceIdx,o.oneSentence,o.page,o.oneSentenceRegisteredTime,
+		   o.isbn, b.bookTitle, b.author, b.publisher from one_sentence o, book b, user_info u
+		    where b.isbn=o.isbn and u.userIdx=o.userIdx
+ 			group by o.oneSentenceIdx order by o.oneSentenceRegisteredTime
+ 
+	</select>
+	
+	<select id="selectOnesentenceListByuserIdx"
+		resultType="com.one.sentence.onesentence.model.ShowOnesentence"
+	>
+		select o.userIdx,u.userName, o.oneSentenceIdx,o.oneSentence,o.page,o.oneSentenceRegisteredTime,
+		 o.isbn, b.bookTitle, b.author, b.publisher from one_sentence o, book b, user_info u
+		  where b.isbn=o.isbn and u.userIdx=o.userIdx and u.userIdx=${value}
+		 group by o.oneSentenceIdx order by o.oneSentenceRegisteredTime
+ 
+	</select>
+	
+	<select id="selectOnesentenceByoneSentenceIdx"
+		resultType="com.one.sentence.onesentence.model.ShowOnesentence"
+	>
+		select o.userIdx,u.userName, o.oneSentenceIdx,o.oneSentence,o.page,o.oneSentenceRegisteredTime,
+		 o.isbn, b.bookTitle, b.author, b.publisher from one_sentence o, book b, user_info u
+		  where o.oneSentenceIdx=#{oneSentenceIdx} and o.isbn=b.isbn and o.userIdx=u.userIdx; 
+	</select>	
+	
+	<select id="selectOnesentenceModel"
+		resultType="com.one.sentence.model.Onesentence"
+	>
+		  select * from one_sentence where oneSentenceIdx=#{oneSentenceIdx}
+	</select>
+	
+	
+	
+	<select id="selectOnesentenceForliketo"
+		resultType="com.one.sentence.onesentence.model.ShowOnesentence"
+	>
+
+	select o.userIdx,u.userName, o.oneSentenceIdx,o.oneSentence,o.page,o.oneSentenceRegisteredTime,
+	 o.isbn, b.bookTitle, b.author, b.publisher from one_sentence o, book b, user_info u, liketo l
+	  where o.oneSentenceIdx=(select oneSentenceIdx from liketo where liketo.userIdx=${value}) and b.isbn=o.isbn and u.userIdx=o.userIdx
+	   group by o.oneSentenceIdx order by l.likeRegisteredTime
+ 
+	
+	</select>	
+	
+	
+	<update id="updateOnesentence"
+		parameterType="com.one.sentence.model.Onesentence"
+	>
+		update one_sentence set oneSentence=#{oneSentence}, page=#{page}, isbn=#{isbn}
+		 where oneSentenceIdx='${oneSentenceIdx}'		
+	</update>
+	
+	<delete id="deleteOnesentence"
+		parameterType="com.one.sentence.model.Onesentence"
+	>
+		delete from one_sentence where oneSentenceIdx=${value}
+	</delete>
+	
+	<!-- 해시태그 부여를 위해 한문장의 idx를 받아옴 -->
+	<select id="findOneSentenceIdx"
+		resultType="Integer"
+	>
+		select oneSentenceIdx from one_sentence where userIdx='${userIdx}' and isbn='${isbn}' and oneSentence like '${oneSentence}'
+	</select>
+	
+	
+	<!-- 책 -->
+	<insert id="insertBook"
+		parameterType="com.one.sentence.onesentence.model.Book"
+	>
+		insert into book (isbn,bookTitle,bookGenre,author,publisher)
+		 value (#{isbn},#{bookTitle},#{bookGenre},#{author},#{publisher})
+	</insert>
+	
+	<select id="selectBookByisbn"
+		resultType="com.one.sentence.onesentence.model.Book"
+	>
+		select * from book where isbn=${value}
+	</select>
+	
+	
+	<!-- 유저  -->
+	<select id="selectUser_infoByuserIdx"
+		resultType="com.one.sentence.model.User_info"
+	>
+		select * from user_info where userIdx=${value} 
+	</select>
+	
+	<update id="updateUser_info"
+		parameterType="com.one.sentence.model.User_info"
+	>
+		update user_info set userPassword=#{userPassword}, userName=#{userName}, userIntroduction=#{userIntroduction}
+		 where userIdx='${userIdx}'
+	</update>
+	
+	<!-- 한문장작성시 user point +1 -->
+	<update id="upUserPoint"
+		parameterType="com.one.sentence.model.User_info"
+	>
+		update user_info set userPoint=userPoint+1 where userIdx=${value}
+	</update>
+	
+	<!-- 한문장삭제시 user point -1 -->
+	<update id="downUserPoint"
+		parameterType="com.one.sentence.model.User_info"
+	>
+		update user_info set userPoint=userPoint-1 where userIdx=${value}
+	</update>
+	
+	<!-- 한문장작성시 hashtag 넣어줌 -->
+	<insert id="insertHashtag"
+		parameterType="com.one.sentence.model.Hashtag"
+	>
+		insert into hashtag (hashtag, oneSentenceIdx) value(#{hashtag}, #{oneSentenceIdx})
+		</insert>
+	
+	
+</mapper>
