@@ -18,12 +18,7 @@
 		   o.isbn, b.bookTitle, b.author, b.publisher from one_sentence o, book b, user_info u
 		    where b.isbn=o.isbn and u.userIdx=o.userIdx
  			group by o.oneSentenceIdx order by o.oneSentenceRegisteredTime
-	</select>
-	
-	<select id="selectOnesentenceModel"
-		resultType="com.one.sentence.model.Onesentence"
-	>
-		  select * from one_sentence where oneSentenceIdx=#{oneSentenceIdx}
+ 
 	</select>
 	
 	<select id="selectOnesentenceListByuserIdx"
@@ -32,7 +27,8 @@
 		select o.userIdx,u.userName, o.oneSentenceIdx,o.oneSentence,o.page,o.oneSentenceRegisteredTime,
 		 o.isbn, b.bookTitle, b.author, b.publisher from one_sentence o, book b, user_info u
 		  where b.isbn=o.isbn and u.userIdx=o.userIdx and u.userIdx=${value}
-		 group by o.oneSentenceIdx order by o.oneSentenceRegisteredTime 
+		 group by o.oneSentenceIdx order by o.oneSentenceRegisteredTime
+ 
 	</select>
 	
 	<select id="selectOnesentenceByoneSentenceIdx"
@@ -43,13 +39,24 @@
 		  where o.oneSentenceIdx=#{oneSentenceIdx} and o.isbn=b.isbn and o.userIdx=u.userIdx; 
 	</select>	
 	
+	<select id="selectOnesentenceModel"
+		resultType="com.one.sentence.model.Onesentence"
+	>
+		  select * from one_sentence where oneSentenceIdx=#{oneSentenceIdx}
+	</select>
+	
+	
+	
 	<select id="selectOnesentenceForliketo"
 		resultType="com.one.sentence.onesentence.model.ShowOnesentence"
 	>
+
 	select o.userIdx,u.userName, o.oneSentenceIdx,o.oneSentence,o.page,o.oneSentenceRegisteredTime,
 	 o.isbn, b.bookTitle, b.author, b.publisher from one_sentence o, book b, user_info u, liketo l
-	  where o.oneSentenceIdx in(select oneSentenceIdx from liketo where liketo.userIdx=${value}) and b.isbn=o.isbn and u.userIdx=o.userIdx
-	   group by o.oneSentenceIdx order by l.likeRegisteredTime	
+	  where o.oneSentenceIdx=(select oneSentenceIdx from liketo where liketo.userIdx=${value}) and b.isbn=o.isbn and u.userIdx=o.userIdx
+	   group by o.oneSentenceIdx order by l.likeRegisteredTime
+ 
+	
 	</select>	
 	
 	
@@ -122,7 +129,7 @@
 		parameterType="com.one.sentence.model.Hashtag"
 	>
 		insert into hashtag (hashtag, oneSentenceIdx) value(#{hashtag}, #{oneSentenceIdx})
-	</insert>
+		</insert>
 	
 	
 </mapper>

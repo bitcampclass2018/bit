@@ -7,7 +7,6 @@ import com.one.sentence.model.Onesentence;
 import com.one.sentence.onesentence.model.Book;
 import com.one.sentence.onesentence.model.ShowOnesentence;
 
-
 public interface IOnesentenceService {
 	public void makeOneSentence(Onesentence onesentence);
 	public List<ShowOnesentence> showOneSentenceList();
@@ -15,7 +14,6 @@ public interface IOnesentenceService {
 	public List<ShowOnesentence> showOneSentenceListForLiketo(int userIdx); 
 	public ShowOnesentence showOneSentenceByoneSentenceIdx(int oneSentenceIdx);
 	public Onesentence showOneSentenceModel(int oneSentenceIdx);
-	
 	public void changeOneSentence(int oneSentenceIdx, String oneSentence, String page, int isbn);
 	public int removeOneSentence(int oneSentenceIdx);
 	
@@ -27,4 +25,5 @@ public interface IOnesentenceService {
 	
 	public void makeHashtag(Hashtag tag);
 	public int findOneSentenceIdx(int userIdx, int isbn, String oneSentence);
+	
 }

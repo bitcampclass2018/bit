@@ -9,7 +9,7 @@ import com.one.sentence.onesentence.model.Book;
 import com.one.sentence.onesentence.model.ShowOnesentence;
 
 public interface IOnesentenceDao {
-
+ 
 	public int insertOneSentence(Onesentence onesentence);
 	public List<ShowOnesentence> selectOnesentenceList();
 	public List<ShowOnesentence> selectOnesentenceListByuserIdx(int userIdx);
@@ -17,8 +17,6 @@ public interface IOnesentenceDao {
 	
 	public ShowOnesentence selectOnesentenceByoneSentenceIdx(int oneSentenceIdx);
 	public Onesentence selectOnesentenceModel(int oneSentenceIdx);
-	
-	
 	public int updateOneSentence(int oneSentenceIdx,String oneSentence, String page, int isbn);
 	public int deleteOnesentence(int oneSentenceIdx);
 	

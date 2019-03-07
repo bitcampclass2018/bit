@@ -22,32 +22,46 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<beans:bean
-		id="dataSource"
-		class="com.mchange.v2.c3p0.ComboPooledDataSource">
-		<beans:property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<beans:property
-		name="jdbcUrl" value="jdbc:mysql://mysql.cnwa5kgdj8hg.ap-northeast-2.rds.amazonaws.com/onesentence?characterEncoding=utf8" />
-		<beans:property name="user" value="bit2" />
-		<beans:property name="password" value="1234" />
-	</beans:bean>
 	
-	<!-- 마이바티스 sqlSessionFactoryBean설정 -->
-	<beans:bean id="sqlSessionFactory" 
-		class="org.mybatis.spring.SqlSessionFactoryBean"
-	>
-		<!-- 데이터베이스 연결정보 설정 pool설정 -->
-		<beans:property name="dataSource" ref="dataSource"></beans:property>
-		
-		<!-- sql을 보관하는 mapper들을 등록 -->
-		<beans:property name="mapperLocations" value="classpath:com/one/sentence/mapper/*.xml"></beans:property>
-	</beans:bean>
-	
-	<!-- 템플릿 클래스 등록 -->
-	<beans:bean id="sqlSession"
-		class="org.mybatis.spring.SqlSessionTemplate" >
-		<beans:constructor-arg index="0" ref="sqlSessionFactory"></beans:constructor-arg>
-	</beans:bean>
+<beans:bean class="com.mchange.v2.c3p0.ComboPooledDataSource" id="dataSource">
+
+<beans:property value="com.mysql.jdbc.Driver" name="driverClass"/>
+
+<beans:property value="jdbc:mysql://mysql.cnwa5kgdj8hg.ap-northeast-2.rds.amazonaws.com/onesentence?characterEncoding=utf8" name="jdbcUrl"/>
+
+<beans:property value="bit2" name="user"/>
+
+<beans:property value="1234" name="password"/>
+
+</beans:bean>
+
+<!-- 마이바티스 sqlSessionFactoryBean설정 -->
+
+
+
+<beans:bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+
+<!-- 데이터베이스 연결정보 설정 pool설정 -->
+
+
+<beans:property name="dataSource" ref="dataSource"/>
+
+<!-- sql을 보관하는 mapper들을 등록 -->
+
+
+<beans:property value="classpath:com/one/sentence/mapper/*.xml" name="mapperLocations"/>
+
+</beans:bean>
+
+<!-- 템플릿 클래스 등록 -->
+
+
+
+<beans:bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
+
+<beans:constructor-arg ref="sqlSessionFactory" index="0"/>
+
+</beans:bean>
 	
 	
 	

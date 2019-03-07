@@ -8,11 +8,11 @@
 <title>한문장 리스트</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-(function(d, s, id) {
+$().ready(function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
     js = d.createElement(s); js.id = id;
-    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0&appId=APPKEY";
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0&appId=302606807116615";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
 
@@ -36,9 +36,9 @@
 			</tr>
 			<c:forEach items="${oneSentenceList}" var="onesentence">
 				<tr>
-					<td>${onesentence.userIdx}</td>
+					<td class="idx">${onesentence.userIdx}</td>
 					<td>${onesentence.userName}</td>
-					<td id="idx">${onesentence.oneSentenceIdx}</td>
+					<td>${onesentence.oneSentenceIdx}</td>
 					<td>${onesentence.oneSentence}</td>
 					<td>${onesentence.page}</td>
 					<td>${onesentence.oneSentenceRegisteredTime}</td>
@@ -49,22 +49,31 @@
 					 <td><a href="#" id="updateBtn" onclick="updateClick(${onesentence.oneSentenceIdx})">수정</a>
 					 &nbsp;<a href="../../onesentence/delete/${onesentence.oneSentenceIdx}" id="deleteBtn">삭제</a></td>
   <td>
-  	<a href="#" id="test">${onesentence.oneSentenceIdx}</a>
+  	<a href="#" onclick="up(${onesentence.oneSentenceIdx})" id="test" >공유</a>
   </td>
   
 	</tr>
 	</c:forEach>
 		</table>
-		
-		<a id="btn1" class="fb-share-button" href="http://127.0.0.1/sentence/onesentence/one/${list.oneSentenceIdx}" onclick="up()"
-  >btn1</a>
-		
-		<button id="btn2" class="fb-share-button" 
-    data-href="http://127.0.0.1/sentence/onesentence/one/${onesentence.userIdx}" 
-    data-layout="button_count">btn2</button>
 
 <script>
 
+function up(idx){
+	alert("test클릭");
+	alert(idx);	
+	FB.ui({
+		method : 'share_open_graph',
+		action_type: 'og.shares',
+		action_properties: JSON.stringify({
+			object:{ 
+				'og:url': 'http://127.0.0.1/sentence/onesentence/one/'+idx,
+				'og:title' : '한문장',
+				'og:description' : '한문장내용',
+				'og:image': 'https://www.your-domain.com/path/image.jpg'
+			}
+		})
+	})
+};
 
 function updateClick(idx){
 	console.log("수정Click");
@@ -72,25 +81,6 @@ function updateClick(idx){
 	var popupOption="width=700,height=600";
 	window.open(url,"한문장수정하기",popupOption);	
 }
-
-$('#test').on('click',function(){
-	alert("test클릭");
-	alert($('#test').text());
-	
-	FB.ui({
-		method : 'share_open_graph',
-		action_type: 'og.shares',
-		action_properties: JSON.stringify({
-			object:{
-				'og:url': 'http://127.0.0.1/sentence/onesentence/one/'+idx,
-				'og:title' : '한문장',
-				'og:description' : '한문장내용',
-				'og:image': 'https://www.your-domain.com/path/image.jpg',
-			}
-		})
-	})
-	
-});
 
 
 

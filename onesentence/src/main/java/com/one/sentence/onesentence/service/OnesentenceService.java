@@ -12,7 +12,6 @@ import com.one.sentence.onesentence.dao.OnesentenceDao;
 import com.one.sentence.onesentence.model.Book;
 import com.one.sentence.onesentence.model.ShowOnesentence;
 
-
 @Service
 public class OnesentenceService implements IOnesentenceService {
 
@@ -99,6 +98,5 @@ public class OnesentenceService implements IOnesentenceService {
 	public int findOneSentenceIdx(int userIdx, int isbn, String oneSentence) {
 		return dao.findOneSentenceIdx(userIdx, isbn, oneSentence);
 	}
-
 
 }
