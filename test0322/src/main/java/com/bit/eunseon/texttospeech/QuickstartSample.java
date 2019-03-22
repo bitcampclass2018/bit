@@ -13,12 +13,55 @@ import java.io.OutputStream;
 
 //한문장을 받아서 mp3로 반환하는데엔 이 클래스만 있으면 됨.
 public class QuickstartSample {
-	public static void main(String... args) throws Exception {
+	
+	public void makeMp3(int oneSentenceIdx,String oneSentence,String bookTitle,int page ) throws Exception {
 	    // Instantiates a client
 	    try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
 	      // Set the text input to be synthesized
 	      SynthesisInput input = SynthesisInput.newBuilder()
-	            .setText("처음부터 끝까지 수십차례 꼼꼼히 컴토를 해보았지만 내 삶에서는 별다른 오류가 발견되지 않았다.")
+	            /*.setText(oneSentence+bookTitle+"페이지"+page+"에서")[3 second pause]*/
+	    	    .setSsml(oneSentence+"[3 second pause]"+bookTitle+"페이지"+page+"에서")		
+	            .build();
+	      		
+	      // Build the voice request, select the language code ("en-US") and the ssml voice gender
+	      // ("neutral")
+	      VoiceSelectionParams voice = VoiceSelectionParams.newBuilder()
+	          .setLanguageCode("ko_KR")
+	          /*.setSsmlGender(SsmlVoiceGender.NEUTRAL)*/
+	          .setName("ko-KR-Standard-D")
+	          .build();
+
+	      // Select the type of audio file you want returned
+	      AudioConfig audioConfig = AudioConfig.newBuilder()
+	          .setAudioEncoding(AudioEncoding.MP3)
+	          .build();
+
+	      // Perform the text-to-speech request on the text input with the selected voice parameters and
+	      // audio file type
+	      SynthesizeSpeechResponse response = textToSpeechClient.synthesizeSpeech(input, voice,
+	          audioConfig);
+
+	      // Get the audio contents from the response
+	      ByteString audioContents = response.getAudioContent();
+
+	      // Write the response to the output file.
+	      try (OutputStream out = new FileOutputStream(oneSentenceIdx+".mp3")) {
+	        out.write(audioContents.toByteArray());
+	        System.out.println("Audio content written to file \""+oneSentenceIdx+".mp3\"");
+	      }catch(Exception e) {
+	    	  e.printStackTrace();
+	      }
+	    }
+	  }
+	
+	
+	
+	/*public static void main(String... args) throws Exception {
+	    // Instantiates a client
+	    try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
+	      // Set the text input to be synthesized
+	      SynthesisInput input = SynthesisInput.newBuilder()
+	            .setText("영이는 그 말을 믿어버렸고, 방에는 괴로운 영이와 울고 있는 영이의 몸과 거짓말쟁이 순이가 있게 되었다.")
 	            .build();
 
 	      // Build the voice request, select the language code ("en-US") and the ssml voice gender
@@ -26,6 +69,7 @@ public class QuickstartSample {
 	      VoiceSelectionParams voice = VoiceSelectionParams.newBuilder()
 	          .setLanguageCode("ko_KR")
 	          .setSsmlGender(SsmlVoiceGender.NEUTRAL)
+	          .setName("ko-KR-Standard-D")
 	          .build();
 
 	      // Select the type of audio file you want returned
@@ -49,5 +93,5 @@ public class QuickstartSample {
 	    	  e.printStackTrace();
 	      }
 	    }
-	  }
+	  }*/
 }
