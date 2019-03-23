@@ -29,7 +29,7 @@ public class QuickstartSample {
 	    	    .build();
 	      
 	      SynthesizeSpeechResponse response;	
-	      ServletRequest request;
+
 	      if(gender.equals("female")) {
 	     VoiceSelectionParams voice = VoiceSelectionParams.newBuilder()
 	          .setLanguageCode("ko_KR")
