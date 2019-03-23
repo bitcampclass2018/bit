@@ -23,8 +23,20 @@ $().ready(function(d, s, id) {
     js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0&appId=302606807116615";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
-
 </script>ff-->
+<style>
+    a{
+        text-decoration: none;
+         
+        
+    }
+    input{
+        border-style: none;
+    }
+    li{
+        list-style: none;
+    }
+    </style>
 </head>
 <body>
 	<table border="1">
