@@ -10,42 +10,62 @@ import com.google.protobuf.ByteString;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
+import javax.servlet.ServletRequest;
+
 
 //한문장을 받아서 mp3로 반환하는데엔 이 클래스만 있으면 됨.
 public class QuickstartSample {
 	
-	public void makeMp3(int oneSentenceIdx,String oneSentence,String bookTitle,int page ) throws Exception {
+	public void makeMp3(int oneSentenceIdx,String oneSentence,String bookTitle,int page,String gender ) throws Exception {
 	    // Instantiates a client
 	    try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
 	      // Set the text input to be synthesized
 	      SynthesisInput input = SynthesisInput.newBuilder()
-	            /*.setText(oneSentence+bookTitle+"페이지"+page+"에서")[3 second pause]*/
-	    	    .setSsml(oneSentence+"[3 second pause]"+bookTitle+"페이지"+page+"에서")		
-	            .build();
-	      		
-	      // Build the voice request, select the language code ("en-US") and the ssml voice gender
-	      // ("neutral")
-	      VoiceSelectionParams voice = VoiceSelectionParams.newBuilder()
+	    	    /*.setSsml("<speak>"+oneSentence+"<break time=\"1500ms\"/>"+bookTitle+"<break time=\"500ms\"/>"+page+"페이지에서"+"</speak>")*/		
+	    	    /*.setSsml("<speak>"+oneSentence+"<break time=\"1500ms\"/>"+"책"+"<break time=\"500ms\"/>"+bookTitle+"에서.."+"</speak>")	*/
+	            .setSsml("<speak>" +oneSentence+"<break time=\"1500ms\"/>책 <break time=\"100ms\"/>"+"<prosody rate=\"slow\" pitch=\"medium\">"+bookTitle+"</prosody>"+ 
+	            		"<prosody rate=\"medium\" pitch=\"0st\">에</prosody>"+
+	            		 "<prosody rate=\"medium\" pitch=\"-1st\">서.</prosody></speak>")
+	    	    .build();
+	      
+	      SynthesizeSpeechResponse response;	
+	      ServletRequest request;
+	      if(gender.equals("female")) {
+	     VoiceSelectionParams voice = VoiceSelectionParams.newBuilder()
 	          .setLanguageCode("ko_KR")
-	          /*.setSsmlGender(SsmlVoiceGender.NEUTRAL)*/
-	          .setName("ko-KR-Standard-D")
+	          .setName("ko-KR-Standard-B")
 	          .build();
 
-	      // Select the type of audio file you want returned
 	      AudioConfig audioConfig = AudioConfig.newBuilder()
 	          .setAudioEncoding(AudioEncoding.MP3)
+	          .setPitch(-1.60)
+	          .setSpeakingRate(1.07)
 	          .build();
+	      response = textToSpeechClient.synthesizeSpeech(input, voice,
+		          audioConfig);
+	      }else {
+	      //남자
+	      VoiceSelectionParams voice = VoiceSelectionParams.newBuilder()
+		          .setLanguageCode("ko_KR")
+		          .setName("ko-KR-Standard-C")
+		          .build();
 
-	      // Perform the text-to-speech request on the text input with the selected voice parameters and
-	      // audio file type
-	      SynthesizeSpeechResponse response = textToSpeechClient.synthesizeSpeech(input, voice,
-	          audioConfig);
+		      AudioConfig audioConfig = AudioConfig.newBuilder()
+		          .setAudioEncoding(AudioEncoding.MP3)
+		          .setPitch(0.80)
+		          .setSpeakingRate(0.93)
+		          .build();
+		      response = textToSpeechClient.synthesizeSpeech(input, voice,
+			          audioConfig);
+	      }
+		      
+
 
 	      // Get the audio contents from the response
 	      ByteString audioContents = response.getAudioContent();
 
 	      // Write the response to the output file.
-	      try (OutputStream out = new FileOutputStream(oneSentenceIdx+".mp3")) {
+	      try (OutputStream out = new FileOutputStream("C:\\Users\\jaeho\\git\\bit\\test0322\\src\\main\\webapp\\mp3Folder\\"+oneSentenceIdx+".mp3")) {
 	        out.write(audioContents.toByteArray());
 	        System.out.println("Audio content written to file \""+oneSentenceIdx+".mp3\"");
 	      }catch(Exception e) {
@@ -53,45 +73,4 @@ public class QuickstartSample {
 	      }
 	    }
 	  }
-	
-	
-	
-	/*public static void main(String... args) throws Exception {
-	    // Instantiates a client
-	    try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
-	      // Set the text input to be synthesized
-	      SynthesisInput input = SynthesisInput.newBuilder()
-	            .setText("영이는 그 말을 믿어버렸고, 방에는 괴로운 영이와 울고 있는 영이의 몸과 거짓말쟁이 순이가 있게 되었다.")
-	            .build();
-
-	      // Build the voice request, select the language code ("en-US") and the ssml voice gender
-	      // ("neutral")
-	      VoiceSelectionParams voice = VoiceSelectionParams.newBuilder()
-	          .setLanguageCode("ko_KR")
-	          .setSsmlGender(SsmlVoiceGender.NEUTRAL)
-	          .setName("ko-KR-Standard-D")
-	          .build();
-
-	      // Select the type of audio file you want returned
-	      AudioConfig audioConfig = AudioConfig.newBuilder()
-	          .setAudioEncoding(AudioEncoding.MP3)
-	          .build();
-
-	      // Perform the text-to-speech request on the text input with the selected voice parameters and
-	      // audio file type
-	      SynthesizeSpeechResponse response = textToSpeechClient.synthesizeSpeech(input, voice,
-	          audioConfig);
-
-	      // Get the audio contents from the response
-	      ByteString audioContents = response.getAudioContent();
-
-	      // Write the response to the output file.
-	      try (OutputStream out = new FileOutputStream("output3.mp3")) {
-	        out.write(audioContents.toByteArray());
-	        System.out.println("Audio content written to file \"output3.mp3\"");
-	      }catch(Exception e) {
-	    	  e.printStackTrace();
-	      }
-	    }
-	  }*/
 }
