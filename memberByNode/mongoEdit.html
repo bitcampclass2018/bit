@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Page</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+    <h1>Mongo Edit Page</h1>
+    <hr />
+    <fieldset>
+        <legend>Edit data</legend>
+        <table>
+            <tr>
+                <td colspan="2"><input type="text" id="id" value="<%=data._id%>" disabled hidden="true" /></td>
+            </tr>
+            <tr>
+                <td><label>상품명</label></td>
+                <td><input type="text" name="name" id="name" value="<%=data.name%>" disabled /></td>
+            </tr>
+            <tr>
+                <td><label>가격</label></td>
+                <td><input type="text" name="price" id="price" value="<%=data.price%>" /></td>
+            </tr>
+        </table>
+        <input type="button" id="btn" value="수정완료">
+    </fieldset>
+    <script>
+        $('#btn').on('click', function() {
+            var arr = {
+                _id: $('#id').val(),
+                name: $('#name').val(),
+                price: $('#price').val(),
+            };
+            $.ajax({
+                url: '../' + $('#id').val(),
+                type: 'PUT',
+                data: JSON.stringify(arr),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                async: true,
+                success: function(data) {
+                    alert(JSON.stringify(data));
+                    opener.parent.location.reload();
+                    window.close();
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>

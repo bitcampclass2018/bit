@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>List Page</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+    <h1>Mongo List page</h1>
+    <a href="../mongoInsert">Insert Mongo Product</a>
+    <hr />
+    <table width="100%" border="1">
+        <tr>
+            <th>name</th>
+            <th>price</th>
+            <th>edit</th>
+            <th>delete</th>
+        </tr>
+        <% data.forEach(function(item,index){%>
+        <tr>
+            <td>
+                <%= item.name %>
+            </td>
+            <td>
+                <%= item.price %>
+            </td>
+            <!--<td><a href="#" onclick="edit(<%=item._id%>)">edit</a></td>
+            <td><a href="#" onclick="remove(<%=item.name%>)">delete</a></td>-->
+            <td><button onclick="edit(<%=item._id%>)">수정</button></td>
+            <td><button onclick="remove(<%=item.name%>)">삭제</button></td>
+        </tr>
+        <%});%>
+    </table>
+    <script>
+        function edit(id) {
+            alert('수정');
+            var url = "../mongo/editForm/" + id;
+            var popupOption = "width=600,height=600";
+            window.open(url, 'mongo Edit', popupOption);
+        }
+
+        function remove(id) {
+            alert('삭제');
+            var arr = {
+                _id: id
+            };
+            alert(JSON.stringify(arr));
+            $.ajax({
+                url: '../mongo/' + id,
+                type: 'DELETE',
+                data: JSON.stringify(arr),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                async: true,
+                success: function(data) {
+                    alert('delete success');
+                    window.location.reload();
+                },
+                error: function() {
+                    alert('error!');
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>

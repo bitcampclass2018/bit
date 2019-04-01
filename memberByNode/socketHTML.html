@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+       window.onload=function(){
+         //소켓연결
+           var socket = io.connect();
+           //소켓이벤트 연결
+           socket.on('rint2',function(data){
+               alert(data);
+           });
+           //문서객체이벤트를 연결함
+           document.getElementById('button').onclick=function(){
+               //변수선언
+               var text = document.getElementById('text').value;
+               //데이터전송
+               socket.emit('rint',text);
+           };
+       };
+    </script>
+</head>
+<body>
+    <input type="text" id="text" />
+    <input type="button" id="button" value="echo"/>
+    
+</body>
+</html>
