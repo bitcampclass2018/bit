@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.bitcamp.open0207.dao.MemberOpenDao2;
 import com.bitcamp.open0207.model.Member2;
-import com.bitcamp.open0207.model.MemberVO;
 
 @Service
 public class MemServiceImple implements MemService {

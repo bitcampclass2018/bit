@@ -14,13 +14,15 @@ import java.io.OutputStream;
 //한문장을 받아서 mp3로 반환하는데엔 이 클래스만 있으면 됨.
 public class QuickstartSample {
 	
-	public void makeMp3(int oneSentenceIdx,String oneSentence,String bookTitle,int page ) throws Exception {
+	public void makeMp3(int oneSentenceIdx,String oneSentence,String bookTitle) throws Exception {
 	    // Instantiates a client
 	    try (TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()) {
 	      // Set the text input to be synthesized
 	      SynthesisInput input = SynthesisInput.newBuilder()
 	            /*.setText(oneSentence+bookTitle+"페이지"+page+"에서")[3 second pause]*/
-	    	    .setSsml(oneSentence+"[3 second pause]"+bookTitle+"페이지"+page+"에서")		
+	    		  .setSsml("<speak>" +oneSentence+"<break time=\"1500ms\"/>책 <break time=\"100ms\"/>"+"<prosody rate=\"slow\" pitch=\"medium\">"+bookTitle+"</prosody>"+ 
+		            		"<prosody rate=\"medium\" pitch=\"0st\">에</prosody>"+
+		            		 "<prosody rate=\"medium\" pitch=\"-1st\">서.</prosody></speak>")		
 	            .build();
 	      		
 	      // Build the voice request, select the language code ("en-US") and the ssml voice gender
@@ -28,12 +30,14 @@ public class QuickstartSample {
 	      VoiceSelectionParams voice = VoiceSelectionParams.newBuilder()
 	          .setLanguageCode("ko_KR")
 	          /*.setSsmlGender(SsmlVoiceGender.NEUTRAL)*/
-	          .setName("ko-KR-Standard-D")
+	          .setName("ko-KR-Standard-C")
 	          .build();
 
 	      // Select the type of audio file you want returned
 	      AudioConfig audioConfig = AudioConfig.newBuilder()
 	          .setAudioEncoding(AudioEncoding.MP3)
+	          .setPitch(0.80)
+	          .setSpeakingRate(0.93)
 	          .build();
 
 	      // Perform the text-to-speech request on the text input with the selected voice parameters and

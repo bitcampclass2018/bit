@@ -35,6 +35,8 @@
             margin-right: 150px;
         }
 </style>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body>
 <header>
@@ -74,6 +76,17 @@
 		</tr>
 	</table>
 	</form>
+	<div id="naver_id_login"></div>
 	</article>
+	
+	<script type="text/javascript">
+  	var naver_id_login = new naver_id_login("cPTP4WjJyJpuaIOiZ61K", "http://localhost/open0207/member/callback");
+  	var state = naver_id_login.getUniqState();
+  	naver_id_login.setButton("white", 2,40);
+  	naver_id_login.setDomain("http://localhost/open0207/member/login");
+  	naver_id_login.setState(state);
+  	naver_id_login.setPopup();
+  	naver_id_login.init_naver_id_login();
+  </script>
 </body>
 </html>

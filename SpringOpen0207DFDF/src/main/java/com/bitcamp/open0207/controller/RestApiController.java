@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bitcamp.open0207.model.Member;
 import com.bitcamp.open0207.model.Member2;
 import com.bitcamp.open0207.model.MemberList;
-import com.bitcamp.open0207.model.MemberVO;
 import com.bitcamp.open0207.service.LoginService;
 import com.bitcamp.open0207.service.MemServiceImple;
 
