@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Page</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+    <h1>Board Edit Page</h1>
+    <hr />
+    <fieldset>
+        <legend>Edit text</legend>
+        <table>
+           <tr>
+                <td><label>글번호</label></td>
+                <td><input type="text" name="num" id="num" value="<%=data.num %>" disabled /></td>
+            </tr>
+            <tr>
+                <td><label>작성자</label></td>
+                <td><input type="text" name="name" id="name" value="<%=data.name%>" disabled /></td>
+            </tr>
+            <tr>
+                <td colspan="2" hidden="true"><input type="text" name="password" id="password" value="<%=data.password%>" disabled /></td>
+            </tr>
+            <tr>
+                <td><label>글내용</label></td>
+                <td><input type="text" name="description" id="description" value="<%=data.description%>" /></td>
+            </tr>
+        </table>
+        <input type="button" id="btn" value="수정완료">
+    </fieldset>
+    <script>
+        $('#btn').on('click', function() {
+            var arr = {
+                num: $('#num').val(),
+                name: $('#name').val(),
+                password: $('#password').val(),
+                description: $('#description').val()
+            };
+            alert(JSON.stringify(arr));
+            $.ajax({
+                url: '../' + $('#num').val(),
+                type: 'PUT',
+                data: JSON.stringify(arr),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                async: true,
+                success: function(data) {
+                    alert(JSON.stringify(data));
+                    opener.parent.location.reload();
+                    window.close();
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>

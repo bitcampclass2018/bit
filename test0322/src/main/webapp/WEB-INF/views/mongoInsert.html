@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert Page</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+    <h1>Insert Page</h1>
+    <hr />
+    <fieldset>
+        <legend>Insert Mongo data</legend>
+        <table>
+            <tr>
+                <td><label>Product Name</label></td>
+                <td><input type="text" name="name" id="name" /></td>
+            </tr>
+            <tr>
+                <td><label>Price</label></td>
+                <td><input type="text" name="price" id="price"></td>
+            </tr>
+        </table>
+        <input type="button" value="상품등록" id="btn">
+    </fieldset>
+    <script>
+        $('#btn').on('click', function() {
+            var arr = {
+                name: $('#name').val(),
+                price: $('#price').val()
+            };
+            $.ajax({
+                url: '../mongo/' + $('#name').val(),
+                type: 'POST',
+                data: JSON.stringify(arr),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                async: true,
+                success: function(data) {
+                    alert(JSON.stringify(data));
+                    window.location.href = "http://127.0.0.1:52277/mongo";
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>

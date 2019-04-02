@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>List Page</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style>
+        .deleteBtn,.editBtn{
+            font-weight: bolder;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Board List page</h1>
+    <a href="../boardInsert">Insert Board data</a>
+    <hr />
+    <table width="100%" border="1">
+        <tr>
+           <th>글번호</th>
+            <th>작성자</th>
+            <th>글내용</th>
+            <th>edit</th>
+            <th>delete</th>
+        </tr>
+        <% data.forEach(function(item,index){ %>
+        <tr>
+           <td class="num">
+               <%= item.num %>
+           </td>
+            <td class="name">
+                <%= item.name %>
+            </td>
+            <td>
+                <%= item.description %>
+            </td>
+            <td class="editBtn">수정</td>
+            <td class="deleteBtn">삭제</td>
+        </tr>
+        <%});%>
+    </table>
+    <script>
+        $('.editBtn').on('click',function(){
+            var num = $(this).parent().find('.num');
+            num = num[0].innerText;
+            var url = "../board/editForm/" + num;
+            var popupOption = "width=600,height=600";
+            window.open(url, 'board Edit', popupOption);
+        });
+
+        $('.deleteBtn').on('click',function(){
+            var num = $(this).parent().find('.num');
+            num = num[0].innerText;
+            var arr = { num : num};
+            alert(JSON.stringify(arr));
+            $.ajax({
+                url: '../board/' + num,
+                type: 'DELETE',
+                data: JSON.stringify(arr),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                async: true,
+                success: function(data) {
+                    alert('delete success');
+                    window.location.reload();
+                },
+                error: function() {
+                    alert('error!');
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>
