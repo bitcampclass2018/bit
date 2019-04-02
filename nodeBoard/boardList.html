@@ -21,6 +21,7 @@
            <th>글번호</th>
             <th>작성자</th>
             <th>글내용</th>
+            <th>작성시간</th>
             <th>edit</th>
             <th>delete</th>
         </tr>
@@ -34,6 +35,9 @@
             </td>
             <td>
                 <%= item.description %>
+            </td>
+            <td>
+                <%= item.time %>
             </td>
             <td class="editBtn">수정</td>
             <td class="deleteBtn">삭제</td>

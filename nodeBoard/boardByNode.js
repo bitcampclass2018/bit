@@ -55,13 +55,15 @@ app.post('/board/:name', function (request, response) {
                 num: cntResult + 1,
                 name: body.name,
                 password: body.password,
-                description: body.description
+                description: body.description,
+                time: new Date()+9
             }, function (error, result) {
                 response.send({
                     num: cntResult + 1,
                     name: body.name,
                     password: body.password,
-                    description: body.description
+                    description: body.description,
+                    time: new Date()+9
                 });
             });
         });
@@ -83,16 +85,18 @@ app.put('/board/:num', function (request, response) {
     let b = Number(request.params.num);
     console.log('body.description:'+body.description);
     console.log(b);
-    db.board.update({num: b}, {name: body.name},{password:body.password},
-       {$set: {description: body.description}}, function (error, results) {
+    db.board.findOne({num:b},function(error,results){
+        let temp = results;
+        temp.description = body.description;
+        db.board.save(temp);
         response.send({
             num: b,
             name: body.name,
             password: body.password,
-            description: body.description
+            description: body.description,
+            time: body.time
         });
     });
-
 });
 app.delete('/board/:num', function (request, response) {
     let b= request.params.num*1;
