@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>Web Chat</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        $().ready(function(){
+            var socket = io.connect();
+            //이벤트 연결
+            socket.on('message',function(data){
+                //추가할 문자열 만든다.
+                var output = '';
+                output += '<li>';
+                output += '   <h3>'+data.name +'</h3>';
+                output += '   <p>'+data.message+'</p>';
+                output += '   <p>'+data.data +'</p>';
+                output += '</li>';
+                //문서객체를 추가한다.
+                $(output).prependTo('#content');
+                $('#content').listview('refresh');
+            });
+            //버튼을 클릭할 때(서버의 message이벤트 발생시킴과 동시에 데이터를 전달하도록)
+            $('button').click(function(){
+                socket.emit('message',{
+                    name:$('#name').val(),
+                    message:$('#message').val(),
+                    data:new Date().toUTCString()
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+   <div data-role="page">
+        <div data-role="header">
+            <h1>Socket.io Chat</h1>
+        </div>
+       <div data-role="content">
+           <h3>Nick Name</h3>
+           <input id="name" />
+           <a data-role="button" href="#chatpage">Start Chat</a>
+       </div>
+   </div>
+   <div data-role="page" id="chatpage">
+       <div data-role="header">
+           <h1>Socket.io Chat</h1>
+       </div>
+       <div data-role="content">
+           <input id="message" />
+           <button>Button</button>
+           <ul id="content" data-role="listview" data-inset="true"></ul>
+       </div>
+   </div>
+   
+    <!--웹용
+    <h1>Socket.io Chat</h1>
+    <p>Chat With Node.js</p>
+    <hr />
+    <input id="name" />
+    <input id="message" />
+    <button>Button</button>
+    <ul id="content"></ul>-->
+</body>
+</html>
