@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>Web Chat</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        $().ready(function(){
+            var room = prompt('방이름을 입력하시요.','');
+            var socket = io.connect();
+            //이벤트 연결
+            socket.emit('join',room);
+            socket.on('message',function(data){
+                //추가할 문자열 만든다.
+                var output = '';
+                output += '<li>';
+                output += '   <h3>'+data.name +'</h3>';
+                output += '   <p>'+data.message+'</p>';
+                output += '   <p>'+data.data +'</p>';
+                output += '</li>';
+                //문서객체를 추가한다.
+                $(output).prependTo('#content');
+            });
+            //버튼을 클릭할 때(서버의 message이벤트 발생시킴과 동시에 데이터를 전달하도록)
+            $('button').click(function(){
+                let message = $('#message').val().replace(/(^ +|)/g,'');
+                if(message==null||message==''){
+                    alert('메시지를 입력하세요.')
+                }else{
+                socket.emit('message',{
+                    name:$('#name').val(),
+                    message:$('#message').val(),
+                    data:new Date().toUTCString()
+                });
+                document.getElementById('message').value='';
+                    }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Socket.io Chat</h1>
+    <p>Chat With Node.js</p>
+    <hr />
+    <input id="name" />
+    <input id="message" />
+    <button>Button</button>
+    <ul id="content"></ul>
+</body>
+</html>
