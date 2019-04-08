@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>Web Chat</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1" />
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        $().ready(function() {
+            var socket = io.connect();
+            //이벤트 연결
+            var room = $('#isbn').val();
+            socket.emit('join');
+            $('<p>'+$('#userName').val()+'님이 입장하셨습니다.</p>').appendTo('#content');
+            socket.on('message', function(data) {
+                //추가할 문자열 만든다.
+                var output = '';
+                output += '<li>';
+                output += '   <p>' + data.userName + '</p>';
+                output += '   <p>' + data.message + '</p>';
+                output += '   <p>' + data.time+'</P>';
+                output += '</li>';
+                //문서객체를 추가한다.
+                $(output).appendTo('#content');
+            });
+            //버튼을 클릭할 때(서버의 message이벤트 발생시킴과 동시에 데이터를 전달하도록)
+            $('button').click(function() {
+                let message = $('#message').val().replace(/(^ +|)/g, '');
+                if (message == null || message == '') {
+                    alert('메시지를 입력하세요.')
+                } else {
+                    socket.emit('message', {
+                        isbn:$('#isbn').val(),
+                        userName: $('#userName').val(),
+                        message: $('#message').val(),
+                        time:new Date().toLocaleString()
+                    });
+                    document.getElementById('message').value = '';
+                }
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+    <h1><%= bookTitle %></h1>
+    <p>자유롭게 의견을 나눠보세요.</p>
+
+    <hr />
+    <input id="isbn" value="<%= isbn%>" />
+    <input id="userName" value="<%= userName %>"/>
+    <input id="message" />
+    <button>Button</button>
+    <ul>
+        <% data.forEach(function(item,index){ %>
+        <li>
+           <p><%= item.userName %></p>
+            <p><%= item.message %></p>
+            <p><%= item.time %></p>
+        </li>
+        <%});%>
+    </ul>
+    <ul id="content"></ul>
+</body>
+
+</html>
