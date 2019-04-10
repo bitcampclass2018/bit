@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
-    <title>Web Chat</title>
-    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1" />
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
         $().ready(function() {
             $('#oldChat').hide();
             var socket = io.connect();
@@ -14,7 +15,7 @@
             var room = $('#isbn').val();
             socket.emit('join',room);
             socket.on('first',function(data){
-                $('<p><b>'+data.userName+'님이 입장하셨습니다.</b></p>').appendTo('#content');
+                $('<p><b style="color:blue;">'+data.userName+'님이 입장하셨습니다.</b></p>').appendTo('#content2');
                 window.scrollTo(0,$(document).height());
             });
             socket.emit('first',{
@@ -25,14 +26,13 @@
                 //추가할 문자열 만든다.
                 var output = '';
                 output += '<li>';
-                output += '   <p>' + data.userName + '</p>';
+                output += '   <p><b>' + data.userName + '</b></p>';
                 output += '   <p>' + data.message + '</p>';
-                output += '   <p>' + data.time+'</P>';
+                output += '   <p style="color:grey">' + data.time+'</P>';
                 output += '</li>';
                 //문서객체를 추가한다.
-                $(output).appendTo('#content');
+                $(output).appendTo('#content2');
                 window.scrollTo(0,$(document).height());
-                console.log(data.userName+"의 메시지전송2");
             });
             //버튼을 클릭할 때(서버의 message이벤트 발생시킴과 동시에 데이터를 전달하도록)
             $('#btn').click(function() {
@@ -46,41 +46,37 @@
                         message: $('#message').val(),
                         time:new Date().toLocaleString()
                     });
-                    document.getElementById('message').value = '';
-                    console.log($('#userName').val()+"의 메시지전송");
-                    
+                    document.getElementById('message').value = '';    
                 }
             });
-            $('#showOldChat').click(function(){
-            	$('#oldChat').show();
-                $('#showOldChat').hide();
-                window.scrollTo(0,$(document).height());
-            })
         });
 
     </script>
 </head>
-
 <body>
-<h1><%= bookTitle %></h1>
-    <p>자유롭게 의견을 나눠보세요!</p>
-
-    <hr />
-    <button id="showOldChat">이전 채팅 보기</button>
-    <ul id="oldChat">
-        <% data.forEach(function(item,index){ %>
-        <li>
-           <p><%= item.userName %></p>
+  <input id="isbn" value="<%= isbn%>" hidden="true"/>
+    <input id="userName" value="<%= userName %>" hidden="true"/>
+   <div data-role="page">
+       <div data-role="header" data-position="fixed">
+           <h1><%= bookTitle %></h1>
+       </div>
+       
+       <div data-role="content">
+          <div data-role="collapsible">
+           <h1 data-icon="arrow-d">이전 대화보기</h1>
+           <% data.forEach(function(item,index){ %>
+           <p><b><%= item.userName %></b></p>
             <p><%= item.message %></p>
             <p><%= item.time %></p>
-        </li>
-        <%});%>
-    </ul>
-    <ul id="content"></ul>
-    <input id="isbn" value="<%= isbn%>" hidden="true"/>
-    <input id="userName" value="<%= userName %>" hidden="true"/>
+            <%});%>
+       </div>
+           <ul id="content2" style="list-style: none"></ul>
+       </div>
+       <div data-role="footer" data-position="fixed">
+           
     <input id="message" />
-    <button id="btn">Button</button>
+    <a href="#" id="btn" data-role="button" data-icon="check" data-line="false" style="width:100%;">click</a>
+       </div>
+   </div> 
 </body>
-
 </html>

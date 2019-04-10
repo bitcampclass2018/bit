@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <input type="text" id="isbn">
+    <input type ="text" id="bookTitle">
+    <input type ="text" id="userName">
+    <button id="btn">test전송</button>
+    <script>
+        $().ready(function(){
+            $('#btn').click(function(){
+               var arr={
+                   isbn:$('#isbn').val(),
+                   bookTitle:$('#bookTitle').val(),
+                   userName:$('#userName').val()
+               };
+                alert(JSON.stringify(arr));
+            $.ajax({
+                url: '../chat/' + $('#isbn').val(),
+                type: 'POST',
+                data: JSON.stringify(arr),
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                async: true,
+                success: function(data) {
+                    alert(JSON.stringify(data));
+                   window.location.href = "http://127.0.0.1:52273/chat/" + JSON.stringify(data);
+                    
+                },
+                error: function(error) {
+                    console.error();
+                }
+            });
+        });
+            });
+    </script>
+</body>
+</html>
