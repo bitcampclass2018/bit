@@ -4,7 +4,6 @@ var fs = require('fs');
 var express = require('express');
 var bodyParser = require('body-parser');
 var ejs = require('ejs');
-var moment = require('moment');
 var socketio = require('socket.io');
 
 
@@ -14,10 +13,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
-var io = socketio();
+
 var server = require('http').createServer(app);
-io.attach(server);
+
 server.listen(52273);
+
+var io = socketio();
 /*
 var server = http.createServer(function (request, response){
     fs.readFile('socketPage.html', function(error, data){
@@ -61,20 +62,26 @@ app.get('/chat/:data', function (request, response) {
                 userName: jsonData.userName
             }));
         });
-        
+
+io.attach(server);
         io.sockets.on('connection', function (socket) {
-            socket.on('join', function () {
-                socket.join(jsonData.isbn);
+            socket.on('join', function (data) {
+                socket.join(data);
             });
             //message이벤트
             socket.on('message', function (data) {
-                io.sockets.to(jsonData.isbn).emit('message', data);
+                console.log(data.userName+"의 메시지전송3");
                 db.chat.save({
-                    isbn: jsonData.isbn,
-                    userName: jsonData.userName,
+                    isbn: data.isbn,
+                    userName: data.userName,
                     message: data.message,
                     time: data.time
                 });
+                io.sockets.in(data.isbn).emit('message', data);
+                console.log(data.userName+"의 메시지전송4");
+            });
+            socket.on('first',function(data){
+               io.sockets.in(data.isbn).emit('first',data); 
             });
 
 
